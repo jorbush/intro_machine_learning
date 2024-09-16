@@ -1,16 +1,15 @@
-# This is a sample Python script.
+import pandas as pd
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+def basic_data_exploration():
+    # save filepath to variable for easier access
+    melbourne_file_path = './input/melb_data.csv'
+    # read the data and store data in DataFrame titled melbourne_data
+    melbourne_data = pd.read_csv(melbourne_file_path)
+    # print a summary of the data in Melbourne data
+    print(melbourne_data.describe())
 
+def exercise_explore_your_data():
+    return NotImplementedError
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    basic_data_exploration()
