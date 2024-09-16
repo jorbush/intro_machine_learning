@@ -1,3 +1,4 @@
+from datetime import datetime
 import pandas as pd
 
 def basic_data_exploration():
@@ -9,7 +10,24 @@ def basic_data_exploration():
     print(melbourne_data.describe())
 
 def exercise_explore_your_data():
-    return NotImplementedError
+    # Path of the file to read
+    iowa_file_path = './input/train.csv'
+
+    # Fill in the line below to read the file into a variable home_data
+    home_data = pd.read_csv(iowa_file_path)
+
+    # Print summary statistics in next line
+    statistics = home_data.describe()
+    print(statistics)
+
+    # What is the average lot size (rounded to nearest integer)?
+    avg_lot_size = round(statistics.loc['mean','LotArea'])
+    print(avg_lot_size)
+
+    # As of today, how old is the newest home (current year - the date in which it was built)
+    newest_home_age = round(datetime.now().year - statistics.loc['max','YearBuilt'])
+    print(newest_home_age)
 
 if __name__ == '__main__':
-    basic_data_exploration()
+    # basic_data_exploration()
+    exercise_explore_your_data()
