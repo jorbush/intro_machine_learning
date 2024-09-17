@@ -1,5 +1,7 @@
 from datetime import datetime
 import pandas as pd
+from sklearn.metrics import mean_absolute_error
+from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
 
 def basic_data_exploration():
@@ -99,8 +101,47 @@ def exercise_first_machine_learning_model():
     predictions = iowa_model.predict(X)
     print(predictions)
 
+def model_validation():
+    # Load data
+    melbourne_file_path = './input/melb_data.csv'
+    melbourne_data = pd.read_csv(melbourne_file_path)
+    # Filter rows with missing price values
+    filtered_melbourne_data = melbourne_data.dropna(axis=0)
+    # Choose target and features
+    y = filtered_melbourne_data.Price
+    melbourne_features = ['Rooms', 'Bathroom', 'Landsize', 'BuildingArea',
+                          'YearBuilt', 'Lattitude', 'Longtitude']
+    X = filtered_melbourne_data[melbourne_features]
+    # Define model
+    melbourne_model = DecisionTreeRegressor()
+    # Fit model
+    melbourne_model.fit(X, y)
+    '''
+    You'll want to evaluate almost every model you ever build. In most (though not all) applications, 
+    the relevant measure of model quality is predictive accuracy. In other words, will the model's predictions 
+    be close to what actually happens.
+    There are many metrics for summarizing model quality, but we'll start with one called 
+    Mean Absolute Error (also called MAE).
+    '''
+    predicted_home_prices = melbourne_model.predict(X)
+    mean_absolute_error(y, predicted_home_prices)
+
+    # split data into training and validation data, for both features and target
+    # The split is based on a random number generator. Supplying a numeric value to
+    # the random_state argument guarantees we get the same split every time we
+    # run this script.
+    train_X, val_X, train_y, val_y = train_test_split(X, y, random_state=0)
+    # Define model
+    melbourne_model = DecisionTreeRegressor()
+    # Fit model
+    melbourne_model.fit(train_X, train_y)
+    # get predicted prices on validation data
+    val_predictions = melbourne_model.predict(val_X)
+    print(mean_absolute_error(val_y, val_predictions))
+
 if __name__ == '__main__':
     # basic_data_exploration()
     # exercise_explore_your_data()
     # first_machine_learning_model()
-    exercise_first_machine_learning_model()
+    # exercise_first_machine_learning_model()
+    model_validation()
